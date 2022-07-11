@@ -74,23 +74,6 @@ namespace csharp_biblioteca
             }
 
             connectionSql.Close();
-
-            //Item result = null;
-            //foreach (var item in items)
-            //{
-
-            //    if (item.title.Contains(title))
-            //    {
-            //        result = item;
-            //        break;
-
-            //    }
-            //    else
-            //    {
-            //        result = null;
-            //    }
-            //}
-            //return result;
         }
 
 
