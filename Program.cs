@@ -27,4 +27,4 @@ users.Add(user2);
 
 Library library = new Library(users, items);
 
-library.PrintSearchResult(library.SearchItem("Matrix"));
+library.SearchItem("Ignoranza");

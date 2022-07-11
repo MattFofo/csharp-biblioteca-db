@@ -24,6 +24,11 @@ namespace csharp_biblioteca
             this.password = password;
             this.phone = phone;
         }
+        
 
+        public void borrow()
+        {
+
+        }
     }
 }
