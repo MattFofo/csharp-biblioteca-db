@@ -47,7 +47,7 @@ namespace csharp_biblioteca
             try
             {
                 connectionSql.Open();
-                string query = "SELECT library_code, title FROM copies inner join books on copies.book_id = books.id where books.title=@title";
+                string query = "SELECT library_code, title FROM copies INNER JOIN books ON copies.book_id = books.id WHERE books.title=@title";
 
                 using (SqlCommand cmd = new SqlCommand(query, connectionSql))
                 {
@@ -67,13 +67,13 @@ namespace csharp_biblioteca
 
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                Console.WriteLine(ex.Message);
                 throw;
             }
 
-            //connectionSql.Close();
+            connectionSql.Close();
 
             //Item result = null;
             //foreach (var item in items)
@@ -93,25 +93,64 @@ namespace csharp_biblioteca
             //return result;
         }
 
-        public Item SearchItem(uint itemCode)
+
+        public void SearchItem(int itemCode)
         {
-            Item result = null;
-            foreach (var item in items)
+            string connectionString = "Data Source=localhost;" + "Initial Catalog=db-biblioteca;Integrated Security=True";
+            SqlConnection connectionSql = new SqlConnection(connectionString);
+
+
+            try
             {
+                connectionSql.Open();
+                string query = "SELECT library_code, title FROM copies INNER JOIN books ON copies.book_id = books.id WHERE copies.library_code=@itemCode";
 
-                if (item.itemCode == itemCode)
+                using (SqlCommand cmd = new SqlCommand(query, connectionSql))
                 {
-                    result = item;
-                    break;
+                    cmd.Parameters.Add(new SqlParameter("@itemCode", itemCode));
 
-                }
-                else
-                {
-                    result = null;
-                }
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+
+                        while (reader.Read())
+                        {
+                            Console.WriteLine("Titolo " + reader.GetString(1));
+                            Console.WriteLine("Codice: " + reader.GetString(0));
+                        }
+
+                    }
+                };
+
+
             }
-            return result;
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+
+            connectionSql.Close();
         }
+
+        //public Item SearchItem(uint itemCode)
+        //{
+        //    Item result = null;
+        //    foreach (var item in items)
+        //    {
+
+        //        if (item.itemCode == itemCode)
+        //        {
+        //            result = item;
+        //            break;
+
+        //        }
+        //        else
+        //        {
+        //            result = null;
+        //        }
+        //    }
+        //    return result;
+        //}
 
         public void PrintSearchResult(Item result)
         {

@@ -28,3 +28,4 @@ users.Add(user2);
 Library library = new Library(users, items);
 
 library.SearchItem("Ignoranza");
+library.SearchItem(188);
